@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://www.outsharked.com/scripts/jquery.imagemapster.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    </head>
+  
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <img src="jaws.jpg" usemap="#image-map">
+            <map name="image-map">            
+                <area target="" alt="" state="ss" title="" href="" onclick="SelectTeeth($(this).attr('state'),'Teethno1','t001')" coords="254,389,237,390,225,388,212,383,205,377,203,363,201,350,202,338,208,330,214,320,221,316,233,322,245,324,254,330,265,341,271,346,272,356,270,369,265,378" shape="poly"  >
+                <area target="" alt="" state="s1"title="" href=""  onclick="SelectTeeth($(this).attr('state'),'Teethno2','t002')" coords="223,310,217,300,215,290,215,276,216,266,221,254,228,251,234,248,243,247,251,249,261,255,270,259,278,266,288,274,290,283,291,294,286,306,281,314,277,320,269,324,257,324,247,323,233,321" shape="poly">
+                <area target="" alt="" state="s2" title="" href=""  onclick="SelectTeeth($(this).attr('state'),'Teethno3','t003')"  coords="240,242,236,233,233,222,238,215,246,211,254,207,264,209,273,214,282,218,291,224,295,232,295,240,295,248,289,252,277,252,268,252,257,250,245,246" shape="poly">
+                <area target="" alt="" state="s3" title="" href=""  onclick="SelectTeeth($(this).attr('state'),'Teethno4','t004')"  coords="269,210,262,205,255,198,253,190,254,182,260,175,267,169,272,166,279,166,288,173,296,177,301,183,307,190,311,194,312,202,308,210,301,213,288,214,277,213" shape="poly">
+                <area target="" alt="" state="s4" title="" href=""  onclick="SelectTeeth($(this).attr('state'),'Teethno5','t005')"  coords="317,177,308,176,297,174,289,171,284,167,270,159,269,150,273,138,279,130,288,125,296,120,303,120,311,130,317,141,321,150,321,162,321,170" shape="poly">
+                <area target="" alt="" state="s5" title="" href="" onclick="SelectTeeth($(this).attr('state'),'Teethno6','t006')"  coords="301,118,302,108,309,100,317,92,323,86,329,84,333,86,338,96,342,105,343,114,344,124,343,134,337,141,329,136,319,130,309,124" shape="poly">
+                <area target="" alt="" state="s6"title="" href="" onclick="SelectTeeth($(this).attr('state'),'Teethno7','t007')"  coords="337,80,340,71,356,67,365,62,380,60,389,57,396,58,399,68,399,81,397,91,394,100,393,106,389,114,386,121,378,125,368,126,357,124,345,102,341,90" shape="poly">
+            </map>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+        <div class="col-lg-4">
+            <table id="TableTreatment" style="width:100%">
+            <thead>
+                <tr>                                      
+                    <th >Id</th>
+                    <th >Name</th>
+                </tr>
+            </thead>
+            <tbody id="TbodyDataTreatments">
+                
+            </tbody>
+            <table>
+        </div>
+    </div>
+</div>
+
+<script>
+    var Teeth = [];
+    var _State ;
+    var _Color;
+    function SelectTeeth(aa, name, code, id)
+    {
+        if(Teeth.includes(code))
+        {
+            $('table#TableTreatment tr#'+code).remove();
+            var i = 0;
+            while (i < Teeth.length) {
+                if (Teeth[i] === code) 
+                {
+                    Teeth.splice(i, 1);
+                } else 
+                {
+                ++i;
+                }
+               }
+            
+        }
+        else
+        {
+            $('#TbodyDataTreatments').append('<tr id="'+code+'" style="margin-bottom:5px">\n' +
+                '                                                  <td>'+code+'</td>\n' +
+                '                                                  <td>'+name+'</td>\n' +
+                '                                                  <td><button onclick="DeleteSelectedTeeth(this)"> Delete</button></td>\n' +
+                '                                              </tr>');
+
+                Teeth.push(code);
+        }
+    }
+
+    function AddTreatmentDetails(Object)
+    {
+
+    }
+</script>
+<script>
+    function DeleteSelectedTeeth(Object)
+    {
+        var CurrentRow = $(Object).closest("tr");
+        let code = CurrentRow.find("td:eq(0)").text();
+        $('table#TableTreatment tr#'+code).remove();
+
+        var i = 0;
+            while (i < Teeth.length) 
+            {
+                if (Teeth[i] === code) 
+                {
+                    Teeth.splice(i, 1);
+                } else 
+                {
+                ++i;
+                }
+            }
+    }
+</script>
+<script>      
+var basic_opts = 
+{
+    mapKey: 'state',
+    fillColor :'FF0000'
+};
+
+var initial_opts = $.extend({},basic_opts, 
+    { 
+        staticState: false,
+        fill: true,
+        stroke: false,
+        strokeWidth: 2,
+        strokeColor: 'ff0000',
+    
+    });
+
+   $('img').mapster(initial_opts)
+    .mapster('set',true, _State , {
+        fill: false,
+        //fillColor: '00ff00'
+    })
+    .mapster('snapshot')
+    .mapster('rebind',basic_opts);
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+
+
+</html>
